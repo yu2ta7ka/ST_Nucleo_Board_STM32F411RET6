@@ -13,7 +13,7 @@ use crate::hal::{prelude::*, stm32};
 
 #[entry]
 fn main() -> ! {
-    if let (Some(dp), Some(cp)) = (
+    if let (Some(dp), Some(_cp)) = (
         stm32::Peripherals::take(),
         cortex_m::peripheral::Peripherals::take(),
     ) {
@@ -21,19 +21,15 @@ fn main() -> ! {
         let gpioa = dp.GPIOA.split();
         let mut led = gpioa.pa5.into_push_pull_output();
 
-        // Set up the system clock. We want to run at 48MHz for this one.
-        let rcc = dp.RCC.constrain();
-        let clocks = rcc.cfgr.sysclk(48.mhz()).freeze();
-
-        // Create a delay abstraction based on SysTick
-        let mut delay = hal::delay::Delay::new(cp.SYST, clocks);
+        let gpioc = dp.GPIOC.split();
+        let button1 = gpioc.pc13.into_floating_input();
 
         loop {
-            // On for 1s, off for 1s.
-            led.set_high().unwrap();
-            delay.delay_ms(1000_u32);
-            led.set_low().unwrap();
-            delay.delay_ms(1000_u32);
+            if button1.is_low().unwrap() {
+                led.set_high().unwrap();
+            } else {
+                led.set_low().unwrap();
+            }
         }
     }
 
