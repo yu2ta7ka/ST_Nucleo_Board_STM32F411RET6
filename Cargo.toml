@@ -1,0 +1,9 @@
+[package]
+name = "st_nucleo_board_stm32_f411_ret6"
+version = "0.1.0"
+authors = ["yu2ta7ka"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
