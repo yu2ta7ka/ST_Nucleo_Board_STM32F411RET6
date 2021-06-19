@@ -51,10 +51,10 @@ impl Button1 {
         }
     }
     fn is_pressed(&self) -> bool{
-        self.pin.is_high().unwrap()
+        self.pin.is_low().unwrap()
     }
     fn is_released(&self) -> bool{
-        self.pin.is_low().unwrap()
+        self.pin.is_high().unwrap()
     }
 }
 
