@@ -35,7 +35,7 @@ fn main() -> ! {
         // Use nb crate (https://crates.io/crates/nb)
         // Minimal and reusable non-blocking I/O layer
         // Waiting for a word
-        if let Ok(c) = nb::block!(serial.read()){
+        if let Ok(c) = nb::block!(serial.read()) {
             // Send the received data
             nb::block!(serial.write(c)).unwrap();
         }

@@ -6,7 +6,9 @@ use panic_halt as _;
 use cortex_m_rt::entry;
 use stm32f4xx_hal as hal;
 
-use crate::hal::{prelude::*, serial::config::Config, serial::Serial, stm32,gpio::*,gpio::gpioa::* };
+use crate::hal::{
+    gpio::gpioa::*, gpio::*, prelude::*, serial::config::Config, serial::Serial, stm32,
+};
 
 use core::fmt::Write; // for pretty formatting of the serial output
 
@@ -48,26 +50,26 @@ fn main() -> ! {
 }
 
 // LED driver
-struct Led{
-    pin:PA5<Output<PushPull>>, 
+struct Led {
+    pin: PA5<Output<PushPull>>,
 }
 
-impl Led{
-    fn new(pin: PA5<Input<Floating>>) -> Led{
+impl Led {
+    fn new(pin: PA5<Input<Floating>>) -> Led {
         Led {
             pin: pin.into_push_pull_output(),
         }
     }
 
-    fn turn_on(&mut self){
+    fn turn_on(&mut self) {
         self.pin.set_high().unwrap();
     }
 
-    fn turn_off(&mut self){
+    fn turn_off(&mut self) {
         self.pin.set_low().unwrap();
     }
 
-    fn toggle(&mut self){
+    fn toggle(&mut self) {
         self.pin.toggle().unwrap();
     }
 }
