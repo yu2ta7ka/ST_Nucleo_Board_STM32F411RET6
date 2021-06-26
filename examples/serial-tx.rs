@@ -45,7 +45,7 @@ fn main() -> ! {
         nb::block!(tx.write(*c)).unwrap();
     }
     // print "this is UART example!"
-    writeln!(&mut tx, "this is {} example!","UART").unwrap();
+    writeln!(&mut tx, "this is {} example!", "UART").unwrap();
 
     let mut value: u8 = 0;
     loop {
