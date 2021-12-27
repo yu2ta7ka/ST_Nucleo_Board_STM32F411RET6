@@ -3,6 +3,10 @@ Program to ST Nucleo Board STM32F411RET6 with Rust.
 ST Nucleo Board STM32F411RET6を対象にRustでプログラミングしたリポジトリです。  
 https://os.mbed.com/platforms/ST-Nucleo-F411RE/
 
+This is implemented by referring to the following.
+- "基礎から学ぶ 組込みRust" https://www.c-r.com/book/detail/1403
+- https://github.com/melodyaheath/stm32f411re-embedded-rust-ST7735-lcd
+
 # requirements
 | Item | Version |
 | ------------- | ------------- |
