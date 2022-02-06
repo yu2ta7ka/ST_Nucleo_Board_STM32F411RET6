@@ -24,7 +24,8 @@ use core::fmt::Write;
 use stm32f4xx_hal as hal; // for pretty formatting of the serial output
 
 static TIMER_TIM2: Mutex<RefCell<Option<Timer<stm32::TIM2>>>> = Mutex::new(RefCell::new(None));
-static mut TIMER_COUNTER: u32 = 0;
+use core::sync::atomic::{AtomicUsize, Ordering};
+static COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 #[interrupt]
 fn TIM2() {
@@ -33,9 +34,7 @@ fn TIM2() {
             // Clears interrupt associated with event.
             tim2.clear_interrupt(Event::TimeOut);
         }
-        unsafe {
-            TIMER_COUNTER += 1;
-        }
+        COUNTER.fetch_add(1, Ordering::Relaxed);
     });
 }
 
@@ -84,8 +83,6 @@ fn main() -> ! {
         for _ in 0..10000 {
             _x += 1;
         }
-        unsafe {
-            writeln!(tx, "timer count: {}ms \r", TIMER_COUNTER).unwrap();
-        }
+        writeln!(tx, "timer count: {}ms \r", COUNTER.load(Ordering::Relaxed)).unwrap();
     }
 }
